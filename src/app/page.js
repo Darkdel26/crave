@@ -1,69 +1,71 @@
+"use client"
+import Footer from "@/components/public/Footer";
+import Header from "@/components/public/Header";
+import SectionTitle from "@/components/SectionTitle";
+import { specialties } from "@/data/data";
+import { addProduct } from "@/lib/cart";
 import Image from "next/image";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { BiCartAdd } from "react-icons/bi";
+import { LuArrowRight, LuPlus } from "react-icons/lu";
 
-export default function Home() {
-  return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.js
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
-  );
+export default function page() {
+
+    const router = useRouter()
+
+    return (
+        <>
+            <Header />
+
+            <div className="my-20">
+                <div className="conteneur">
+                    <div className="rounded-md bg-hero bg-cover bg-center bg-no-repeat relative overflow-hidden">
+                        <div className="absolute inset-0 backdrop-blur-[1.5px]"></div>
+                        <div className="relative z-10 flex flex-col gap-10 py-20 px-10">
+                            <h1 className="text-4xl font-bold text-white">La gourmandise, <span className="italic text-amber-950">tout simplement.</span></h1>
+                            <p className="text-lg text-white">
+                                Des pâtisseries d'exception, façonnées chaque matin dans notre atelier parisien <br /> avec des ingrédients choisis et beaucoup de passion.
+                            </p>
+                            <div>
+                                <button type="button" className="bg-amber-900 cursor-pointer flex items-center gap-4 py-2 px-4 rounded-full text-white group" onClick={() => router.push("/our-specialties")}>
+                                    Découvrir le catalogue <LuArrowRight className="size-5 group-hover:transform group-hover:translate-x-1 transition duration-300" />
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div className="py-20 bg-gray-100">
+                <div className="conteneur">
+                    <div className="mb-10">
+                        <SectionTitle title="Quelques unes de nos pâtisseries" subtitle="Petits bonheurs, grandes émotions." />
+                    </div>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                        {specialties.slice(0, 3).map((item, index) => (
+                            <div className="flex flex-col bg-white shadow-sm rounded-2xl overflow-hidden" key={index}>
+                                <div className="relative overflow-hidden h-55">
+                                    <Image src={item.img} alt={item.name} fill className="object-cover hover:scale-105 transition duration-500" />
+                                    <button type="button" className="absolute bottom-3 right-3 size-9 flex items-center justify-center rounded-full bg-amber-900 text-white hover:bg-amber-800 cursor-pointer z-10" onClick={() => addProduct(item.id)}>
+                                        <BiCartAdd className="size-5" />
+                                    </button>
+                                </div>
+                                <div className="p-4 flex justify-between items-center">
+                                    <h3 className="font-bold text-stone-900">{item.name}</h3>
+                                    <p className="font-medium text-amber-900">{item.price} FCFA</p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+
+                    <div className="flex justify-center mt-10">
+                        <Link className="underline text-sm text-amber-700" href="/our-specialties">Voir plus</Link>
+                    </div>
+                </div>
+            </div>
+
+            <Footer />
+        </>
+    )
 }
