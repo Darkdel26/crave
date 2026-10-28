@@ -8,7 +8,6 @@ function generateOrderId() {
 }
 
 export async function pay(data) {
-    console.log(data)
 
     const result = paySchema.safeParse(data);
 
@@ -21,7 +20,6 @@ export async function pay(data) {
         };
     }
 
-    console.log(result.data)
     const { operator, amount, phoneNumber } = result.data;
 
     if (!test_key || !shop_id) {
@@ -52,7 +50,6 @@ export async function pay(data) {
                 })
             });
             const result = await response.json()
-            console.log(result)
             return {
                 status: result.status,
                 reference: result.reference,
@@ -83,7 +80,6 @@ export async function pay(data) {
                 })
             });
             const result = await response.json()
-            console.log(result)
             return {
                 status: result.status,
                 reference: result.reference,
@@ -114,7 +110,6 @@ export async function pay(data) {
                 })
             });
             const result = await response.json()
-            console.log(result)
             return {
                 status: result.status === "PENDING" ? "SUCCESSFUL" : "FAILED",
                 reference: result.reference,

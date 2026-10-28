@@ -91,7 +91,6 @@ export default function CartPage() {
                 amount: grandTotal,
                 phoneNumber: phone,
             });
-            console.log(data)
 
             if (data?.status === 422) {
                 setErrors(data.errors ?? {});
